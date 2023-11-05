@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Data to Firebase</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Data to Firebase</h1>
+        <form id="dataForm">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Year:</label>
+                <input type="text" class="form-control" id="year" required>
+            </div>
+            <div class="form-group">
+                <label for="subtitle">Subtitle:</label>
+                <input type="text" class="form-control" id="subtitle">
+            </div>
+            <div class="form-group">
+                <label for="details">Details:</label>
+                <textarea class="form-control" id="details" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="importantKeys">Important Keys:</label>
+                <input type="text" class="form-control" id="importantKeys" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Data</button>
+        </form>
+    </div>
+
+    <!-- Include Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Initialize Firebase with your configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHhUG8gVk5EepBUx6XghVD8QjBscnA6ts",
+            authDomain: "jawa-hash.firebaseapp.com",
+            databaseURL: "https://jawa-hash.firebaseio.com",
+            projectId: "jawa-hash",
+            storageBucket: "jawa-hash.appspot.com",
+            messagingSenderId: "1029367709459",
+            appId: "1:1029367709459:web:e4f042e2e3783bbeb8e4e6",
+            measurementId: "G-5BHRYGS8XR"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+
+        // Listen for form submission
+        document.getElementById('dataForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const year = document.getElementById('year').value;
+            const subtitle = document.getElementById('subtitle').value;
+            const details = document.getElementById('details').value;
+            const importantKeys = document.getElementById('importantKeys').value;
+
+            // Push data to Firebase
+            database.ref('data').push({
+                title: title,
+                year: year,
+                subtitle: subtitle,
+                details: details,
+                importantKeys: importantKeys
+            });
+
+            // Clear the form
+            document.getElementById('title').value = '';
+            document.getElementById('year').value = '';
+            document.getElementById('subtitle').value = '';
+            document.getElementById('details').value = '';
+            document.getElementById('importantKeys').value = '';
+        });
+    </script>
+</body>
+</html>
